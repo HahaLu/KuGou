@@ -2,13 +2,16 @@
     <div class="bd page-plist-index">
     <!-- start 歌单列表 -->
     <ul class="panel-img-list" id="panelList">
-      <li>
+      <li 
+      v-for="item in songMenuList"
+      :key="item.id"
+      >
         <a href="#">
           <div class="panel-img-left">
-            <img src="http://imge.kugou.com/soft/collection/400/20190906/20190906134501853503.jpg"/>
+            <img :src="item.picUrl"/>
           </div>
           <div class="panel-img-content">
-            <p class="panel-img-content-first">每周推荐歌曲</p>
+            <p class="panel-img-content-first">{{item.songList[0].singername}}</p>
             <p class="panel-img-content-sub">
               <i class="icon-music"></i>400775949
             </p>
@@ -25,8 +28,29 @@
   </div>
 </template>
 <script>
-export default {
+ import {getSongMenu} from 'api/songmenu'
+ import {ERR_OK} from 'api/config'
   
+export default {
+    created () {
+      this._getSongMenu()
+    },
+    data () {
+      return {
+        songMenuList:[]
+      }
+    },
+    methods: {
+       _getSongMenu(){
+          getSongMenu().then((res)=>{
+            if(res.code === ERR_OK){
+              console.log(res.data.topList)
+              this.songMenuList = res.data.topList
+            }
+          })
+    }
+    },
+   
 }
 </script>
 <style lang="stylus" scoped>

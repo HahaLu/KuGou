@@ -41,7 +41,7 @@ export default {
             text-align center
             margin-left .13rem
             position relative
-            top -.08rem
+            top -.1rem
             >span
                 display inline-block
                 width 1.02rem
